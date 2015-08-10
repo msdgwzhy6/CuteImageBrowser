@@ -19,12 +19,12 @@
 
 - (void)show {
     NSArray *imageArr = [[NSArray alloc]initWithObjects:[UIImage imageNamed:@"1"],
-                         [UIImage imageNamed:@"2"], [UIImage imageNamed:@"test1.jpg"], nil];
+                         [UIImage imageNamed:@"2"], [UIImage imageNamed:@"3"], nil];
     CuteImageBrowser *imageBrowser = [[CuteImageBrowser alloc]init];
     imageBrowser.imageArray = imageArr;
     imageBrowser.imagesCount = 3;
     imageBrowser.tag = 2;
-    imageBrowser.animationType = AnimationTypeOglFlip;
+    imageBrowser.animationType = AnimationTypeCube;
     [self.navigationController pushViewController:imageBrowser animated:YES];
 }
 
