@@ -51,6 +51,7 @@ const NSArray *__AnimationType;
         _animationType = AnimationTypeCube;
         _imageArray = [[NSArray alloc]init];
         _tag = tag;
+        _currentPage = tag;
     }
     return self;
 }
@@ -84,7 +85,7 @@ const NSArray *__AnimationType;
 }
 
 - (void)show:(NSInteger)tag{
-    
+    _currentPage = tag;
     _imageView = [[UIImageView alloc]init];
     _imageView.backgroundColor = [UIColor lightGrayColor];
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
