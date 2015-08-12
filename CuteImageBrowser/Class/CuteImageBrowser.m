@@ -11,6 +11,7 @@
 #define IPHONE_SCREEN_WIDTH [[UIScreen mainScreen]bounds].size.width
 #define IPHONE_SCREEN_HEIGHT [[UIScreen mainScreen]bounds].size.height
 #define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
+#define MaxScaleZoom 2.0
 
 const NSArray *__AnimationType;
 #define animationTypeGet (__AnimationType == nil ?__AnimationType = [[NSArray alloc] initWithObjects:@"",kCATransitionFade,kCATransitionMoveIn,kCATransitionPush,kCATransitionReveal,@"cube",@"suckEffect",@"oglFlip",@"rippleEffect",nil] : __AnimationType)
@@ -20,6 +21,9 @@ const NSArray *__AnimationType;
 @interface CuteImageBrowser() {
     UIImageView *_imageView;
     UIWindow *_window;
+    
+    //现在是否放大
+    BOOL _isScale;
 }
 @end
 
@@ -52,6 +56,17 @@ const NSArray *__AnimationType;
         _imageArray = [[NSArray alloc]init];
         _tag = tag;
         _currentPage = tag;
+    }
+    return self;
+}
+
+- (instancetype)init:(NSArray *)imageArray tag:(NSInteger)tag animationType:(AnimationType)type {
+    self = [super init];
+    if (self) {
+        _imageArray = [[NSArray alloc]initWithArray:imageArray];
+        _tag = tag;
+        _currentPage = tag;
+        _animationType = type;
     }
     return self;
 }
@@ -90,6 +105,8 @@ const NSArray *__AnimationType;
     _imageView.backgroundColor = [UIColor lightGrayColor];
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
     _imageView.image = (UIImage *)_imageArray[tag];
+    _imageCount = _imageArray.count;
+    _isScale = false;
     [self setContentFrame:_imageView.image];
     [self.view addSubview:_imageView];
     
@@ -101,13 +118,17 @@ const NSArray *__AnimationType;
     rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:rightSwipeGesture];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeWindow:)];
-    tap.numberOfTapsRequired = 1;
-    [self.view addGestureRecognizer:tap];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeWindow:)];
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
+    [self.view addGestureRecognizer:singleTap];
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(scaleImage:)];
     doubleTap.numberOfTapsRequired = 2;
+    doubleTap.numberOfTouchesRequired = 1;
     [self.view addGestureRecognizer:doubleTap];
+    
+    [singleTap requireGestureRecognizerToFail:doubleTap];
 }
 
 - (void)setContentFrame:(UIImage *)image{
@@ -144,14 +165,29 @@ const NSArray *__AnimationType;
 }
 
 - (void)scaleImage:(UITapGestureRecognizer *)tap {
-    UIView *backgroundView = tap.view;
-    [UIView animateWithDuration:0.3
-                     animations:^{
-                         
-                     } completion:^(BOOL finished) {
-                         
-                     }];
+    CGFloat tapX = [tap locationInView:_imageView].x;
+    CGFloat tapY = [tap locationInView:_imageView].y;
+    NSLog(@"I'm coming");
+    if (_isScale == true) {
+        [((UIScrollView *)self.view) setZoomScale:1.0 animated:YES];
+    }else {
+        [((UIScrollView *)self.view) setZoomScale:MaxScaleZoom animated:YES];
+    }
+    
+    _isScale = !_isScale;
 }
+
+//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+//    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+//    UITouch *touch = [touches anyObject];
+//    CGPoint touchPoint = [touch locationInView: self.view];
+//    
+//    if (touch.tapCount == 1) {
+//        [self performSelector:@selector(closeWindow:) withObject:[NSValue valueWithCGPoint:touchPoint] afterDelay:0.3];
+//    }else if(touch.tapCount == 2){
+//        [self scaleImage:]
+//    }
+//}
 
 #pragma mark - Animation and image change
 
@@ -174,12 +210,12 @@ const NSArray *__AnimationType;
 
 - (UIImage *)getImage: (BOOL)isNext {
     if (isNext) {
-        _currentPage = (_currentPage + 1) % _imagesCount;
+        _currentPage = (_currentPage + 1) % _imageCount;
     }else {
-        _currentPage = (_currentPage - 1 + _imagesCount) % _imagesCount;
+        _currentPage = (_currentPage - 1 + _imageCount) % _imageCount;
     }
     
-    NSLog(@"------------%d-----------",_currentPage);
+//   NSLog(@"------------%d-----------",_currentPage);
     return _imageArray[_currentPage];
 }
 
