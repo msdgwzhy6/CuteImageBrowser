@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, BrowserType) {
 
 @interface CuteImageBrowser : UIViewController <UIScrollViewDelegate>
 
-@property(nonatomic, assign)NSInteger imagesCount;
+@property(nonatomic, assign)NSInteger imageCount;
 @property(nonatomic, assign)NSInteger currentPage;
 @property(nonatomic, assign)NSInteger tag;
 @property(nonatomic, assign)AnimationType animationType;
@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, BrowserType) {
 @property(nonatomic, strong)UIImageView *imageView;
 
 - (void)show:(NSInteger)tag;
+- (instancetype)init:(NSArray *)imageArray tag:(NSInteger)tag animationType:(AnimationType)type;
 
 + (CuteImageBrowser *)sharedCuteImageBrowser;
 
