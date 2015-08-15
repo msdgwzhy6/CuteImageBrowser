@@ -18,7 +18,6 @@ const NSArray *__AnimationType;
 #define animationTypeEnum(string) ([animationTypeGet indexOfObject:string])// 字串 to 枚举
 
 @interface CuteImageBrowser() {
-    UIImageView *_imageView;
     UIWindow *_window;
 }
 @end
@@ -84,6 +83,17 @@ const NSArray *__AnimationType;
     self.view = scrollview;
 }
 
+- (void)loadSubview {
+    _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0, IPHONE_SCREEN_HEIGHT - 40, IPHONE_SCREEN_WIDTH, 40)];
+    _pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+    _pageControl.currentPageIndicatorTintColor = RGBACOLOR(30, 220, 30, 1);
+    _pageControl.currentPage = _currentPage;
+    _pageControl.numberOfPages = _imagesCount;
+    _pageControl.hidesForSinglePage = YES;
+    [_pageControl addTarget:self action:@selector(changeValue:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:_pageControl];
+}
+
 - (void)show:(NSInteger)tag{
     _currentPage = tag;
     _imageView = [[UIImageView alloc]init];
@@ -92,6 +102,8 @@ const NSArray *__AnimationType;
     _imageView.image = (UIImage *)_imageArray[tag];
     [self setContentFrame:_imageView.image];
     [self.view addSubview:_imageView];
+    [self loadSubview];
+    _pageControl.currentPage = _currentPage;
     
     UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(leftSwipe:)];
     leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -175,11 +187,13 @@ const NSArray *__AnimationType;
 - (UIImage *)getImage: (BOOL)isNext {
     if (isNext) {
         _currentPage = (_currentPage + 1) % _imagesCount;
+        _pageControl.currentPage = _currentPage;
     }else {
         _currentPage = (_currentPage - 1 + _imagesCount) % _imagesCount;
+        _pageControl.currentPage = _currentPage;
     }
     
-    NSLog(@"------------%d-----------",_currentPage);
+    NSLog(@"------------%lu-----------",_currentPage);
     return _imageArray[_currentPage];
 }
 
@@ -198,6 +212,25 @@ const NSArray *__AnimationType;
     (scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5 : 0.0;
     _imageView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
                                    scrollView.contentSize.height * 0.5 + offsetY);
+}
+
+#pragma mark - UIPageControl
+- (void)changeValue:(id)sender {
+    NSInteger page = [sender currentPage];
+    if (page == _currentPage) {
+        return;
+    }
+    
+    if (page > _currentPage) {
+        for (NSInteger i = _currentPage; i <= page; i ++) {
+            [self transitionAnimation:YES];
+        }
+    }else {
+        for (NSInteger i = _currentPage; i >= page; i --) {
+            [self transitionAnimation:NO];
+        }
+    }
+
 }
 
 @end

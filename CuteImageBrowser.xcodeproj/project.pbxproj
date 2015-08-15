@@ -21,6 +21,7 @@
 		2B7775371B789CFB00F38B92 /* qzone.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7775351B789CFB00F38B92 /* qzone.png */; };
 		2B7775381B789CFB00F38B92 /* qzone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7775361B789CFB00F38B92 /* qzone@2x.png */; };
 		2B77753A1B789E1800F38B92 /* test1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B7775391B789E1800F38B92 /* test1.jpg */; };
+		390816E01B7E290000E93B3C /* ScrollImageBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 390816DF1B7E290000E93B3C /* ScrollImageBrowser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,8 @@
 		2B7775351B789CFB00F38B92 /* qzone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = qzone.png; path = Resource/qzone.png; sourceTree = "<group>"; };
 		2B7775361B789CFB00F38B92 /* qzone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "qzone@2x.png"; path = "Resource/qzone@2x.png"; sourceTree = "<group>"; };
 		2B7775391B789E1800F38B92 /* test1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = test1.jpg; path = Resource/test1.jpg; sourceTree = "<group>"; };
+		390816DE1B7E290000E93B3C /* ScrollImageBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScrollImageBrowser.h; path = Class/ScrollImageBrowser.h; sourceTree = "<group>"; };
+		390816DF1B7E290000E93B3C /* ScrollImageBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScrollImageBrowser.m; path = Class/ScrollImageBrowser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +149,8 @@
 			children = (
 				2B77752A1B787F6000F38B92 /* CuteImageBrowser.h */,
 				2B77752B1B787F6000F38B92 /* CuteImageBrowser.m */,
+				390816DE1B7E290000E93B3C /* ScrollImageBrowser.h */,
+				390816DF1B7E290000E93B3C /* ScrollImageBrowser.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -257,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B77750C1B787EFB00F38B92 /* ViewController.m in Sources */,
+				390816E01B7E290000E93B3C /* ScrollImageBrowser.m in Sources */,
 				2B77752C1B787F6000F38B92 /* CuteImageBrowser.m in Sources */,
 				2B7775091B787EFB00F38B92 /* AppDelegate.m in Sources */,
 				2B7775061B787EFB00F38B92 /* main.m in Sources */,
@@ -337,7 +343,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -374,7 +380,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -385,6 +391,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CuteImageBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -395,6 +402,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CuteImageBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -454,6 +462,7 @@
 				2B7775251B787EFB00F38B92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2B7775261B787EFB00F38B92 /* Build configuration list for PBXNativeTarget "CuteImageBrowserTests" */ = {
 			isa = XCConfigurationList;
@@ -462,6 +471,7 @@
 				2B7775281B787EFB00F38B92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -34,6 +34,8 @@ typedef NS_ENUM(NSInteger, BrowserType) {
 @property(nonatomic, assign)NSInteger tag;
 @property(nonatomic, assign)AnimationType animationType;
 @property(nonatomic, strong)NSArray *imageArray;
+@property(nonatomic, strong)UIPageControl *pageControl;
+@property(nonatomic, strong)UIImageView *imageView;
 
 - (void)show:(NSInteger)tag;
 
